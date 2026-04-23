@@ -1,16 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prisma";
 import bcrypt from "bcryptjs";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const defaultPricing = require("@/data/pricing/charges-v1.json");
 
-export async function GET(req: NextRequest) {
-  const secret = req.nextUrl.searchParams.get("secret");
-
-  if (!process.env.SEED_SECRET || secret !== process.env.SEED_SECRET) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
+export async function GET() {
   try {
     const adminHash = await bcrypt.hash("admin123", 10);
     const staffHash = await bcrypt.hash("staff123", 10);
@@ -52,9 +46,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       ok: true,
       message: "Database seeded successfully",
-      credentials: {
-        admin: "admin@example.com / admin123",
-        staff: "staff@example.com / staff123",
+      login: {
+        email: "admin@example.com",
+        password: "admin123",
       },
     });
   } catch (err) {
