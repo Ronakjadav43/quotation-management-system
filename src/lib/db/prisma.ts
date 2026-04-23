@@ -5,10 +5,11 @@ import { Pool } from "pg";
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
 function createPrismaClient() {
-  // Supabase Vercel integration may provide POSTGRES_URL_NON_POOLING instead of DATABASE_URL.
+  // POSTGRES_URL_NON_POOLING = Supabase session-mode pooler (IPv4-accessible, no pgBouncer).
+  // Falls back to DATABASE_URL (may be direct host, IPv6-only on Supabase free tier).
   const connectionString =
-    process.env.DATABASE_URL ||
     process.env.POSTGRES_URL_NON_POOLING ||
+    process.env.DATABASE_URL ||
     process.env.POSTGRES_URL!;
 
   const pool = new Pool({
