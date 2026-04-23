@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+  VIEWER
+}
+
+enum QuotationStatus {
+  DRAFT
+  FINAL
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         UserRole  @default(STAFF)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  quotations Quotation[]
+  auditLogs  AuditLog[]
+}
+
+model Customer {
+  id        String    @id @default(cuid())
+  name      String
+  mobile    String
+  email     String?
+  address   String?
+  village   String?
+  city      String?
+  gstNo     String?
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  quotations Quotation[]
+}
+
+model PricingVersion {
+  id          String    @id @default(cuid())
+  versionName String
+  title       String
+  jsonData    Json
+  isActive    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  quotations Quotation[]
+}
+
+model Quotation {
+  id               String          @id @default(cuid())
+  quoteNo          String          @unique
+  customerId       String
+  pricingVersionId String
+  status           QuotationStatus @default(DRAFT)
+  subtotal         Float           @default(0)
+  extraCharges     Float           @default(0)
+  discount         Float           @default(0)
+  grandTotal       Float           @default(0)
+  notes            String?
+  validUntil       DateTime?
+  createdById      String
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  customer       Customer       @relation(fields: [customerId], references: [id])
+  pricingVersion PricingVersion @relation(fields: [pricingVersionId], references: [id])
+  createdBy      User           @relation(fields: [createdById], references: [id])
+  items          QuotationItem[]
+  manualItems    ManualItem[]
+}
+
+model QuotationItem {
+  id              String    @id @default(cuid())
+  quotationId     String
+  sectionKey      String
+  sectionName     String
+  itemLabel       String
+  calculationType String
+  inputData       Json
+  baseAmount      Float     @default(0)
+  lateFee         Float     @default(0)
+  total           Float     @default(0)
+  createdAt       DateTime  @default(now())
+
+  quotation Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+}
+
+model ManualItem {
+  id          String    @id @default(cuid())
+  quotationId String
+  label       String
+  amount      Float
+  createdAt   DateTime  @default(now())
+
+  quotation Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String
+  action     String
+  entityType String
+  entityId   String
+  oldData    Json?
+  newData    Json?
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}

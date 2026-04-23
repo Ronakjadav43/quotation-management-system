@@ -1,0 +1,191 @@
+{
+  "title": "ભરવાપાત્ર ચાર્જિસ - Electrical Service Charges",
+  "version": "2026-01",
+  "sections": [
+    {
+      "key": "registration_verification",
+      "section_name": "રજીસ્ટ્રેશન અને ટેસ્ટ રિપોર્ટ વેરિફિકેશન ચાર્જિસ",
+      "description": "Registration and Test Report Verification Charges",
+      "input_type": "type_select",
+      "charges": [
+        {
+          "key": "residential_single_phase",
+          "label": "રહેણાંક - સિંગલ ફેઝ (Residential Single Phase)",
+          "amount_type": "fixed",
+          "amount": 50,
+          "late_fee": 20
+        },
+        {
+          "key": "residential_three_phase",
+          "label": "રહેણાંક - થ્રી ફેઝ (Residential Three Phase)",
+          "amount_type": "fixed",
+          "amount": 120,
+          "late_fee": 100
+        },
+        {
+          "key": "commercial_single_phase",
+          "label": "વ્યાપારી - સિંગલ ફેઝ (Commercial Single Phase)",
+          "amount_type": "fixed",
+          "amount": 120,
+          "late_fee": 50
+        },
+        {
+          "key": "commercial_three_phase",
+          "label": "વ્યાપારી - થ્રી ફેઝ (Commercial Three Phase)",
+          "amount_type": "fixed",
+          "amount": 240,
+          "late_fee": 100
+        },
+        {
+          "key": "industrial",
+          "label": "ઔદ્યોગિક (Industrial)",
+          "amount_type": "fixed",
+          "amount": 360,
+          "late_fee": 150
+        }
+      ]
+    },
+    {
+      "key": "fixed_service_line",
+      "section_name": "ફિક્સડ સર્વિસ લાઇન ચાર્જિસ",
+      "description": "Fixed Service Line Charges",
+      "input_type": "load_kw",
+      "charges": [
+        {
+          "key": "slab_0_2",
+          "label": "0 - 2 kW",
+          "amount_type": "fixed",
+          "amount": 3400,
+          "min_kw": 0,
+          "max_kw": 2
+        },
+        {
+          "key": "slab_2_5",
+          "label": "2.01 - 5 kW",
+          "amount_type": "fixed",
+          "amount": 5400,
+          "min_kw": 2.01,
+          "max_kw": 5
+        },
+        {
+          "key": "slab_5_10",
+          "label": "5.01 - 10 kW",
+          "amount_type": "fixed",
+          "amount": 8500,
+          "min_kw": 5.01,
+          "max_kw": 10
+        },
+        {
+          "key": "slab_10_20",
+          "label": "10.01 - 20 kW",
+          "amount_type": "fixed",
+          "amount": 14000,
+          "min_kw": 10.01,
+          "max_kw": 20
+        },
+        {
+          "key": "slab_20_100",
+          "label": "20.01 - 100 kW",
+          "amount_type": "formula",
+          "base_amount": 21000,
+          "extra_per_kw": 1100,
+          "formula_from_kw": 20,
+          "min_kw": 20.01,
+          "max_kw": 100
+        },
+        {
+          "key": "slab_above_100",
+          "label": "100 kW થી વધુ (Above 100 kW)",
+          "amount_type": "formula",
+          "base_amount": 109000,
+          "extra_per_kw": 1200,
+          "formula_from_kw": 100,
+          "min_kw": 100.01,
+          "max_kw": 99999
+        }
+      ]
+    },
+    {
+      "key": "service_line_shifting",
+      "section_name": "સર્વિસ લાઇન શિફ્ટિંગ ચાર્જિસ",
+      "description": "Service Line Shifting Charges",
+      "input_type": "load_kw",
+      "charges": [
+        {
+          "key": "shifting_0_2",
+          "label": "0 - 2 kW",
+          "amount_type": "fixed",
+          "amount": 2500,
+          "min_kw": 0,
+          "max_kw": 2
+        },
+        {
+          "key": "shifting_2_5",
+          "label": "2.01 - 5 kW",
+          "amount_type": "fixed",
+          "amount": 4000,
+          "min_kw": 2.01,
+          "max_kw": 5
+        },
+        {
+          "key": "shifting_5_10",
+          "label": "5.01 - 10 kW",
+          "amount_type": "fixed",
+          "amount": 6500,
+          "min_kw": 5.01,
+          "max_kw": 10
+        },
+        {
+          "key": "shifting_10_20",
+          "label": "10.01 - 20 kW",
+          "amount_type": "fixed",
+          "amount": 11000,
+          "min_kw": 10.01,
+          "max_kw": 20
+        },
+        {
+          "key": "shifting_above_20",
+          "label": "20 kW થી વધુ (Above 20 kW)",
+          "amount_type": "formula",
+          "base_amount": 15000,
+          "extra_per_kw": 800,
+          "formula_from_kw": 20,
+          "min_kw": 20.01,
+          "max_kw": 99999
+        }
+      ]
+    },
+    {
+      "key": "security_deposit",
+      "section_name": "સિક્યુરિટી ડિપોઝિટ",
+      "description": "Security Deposit",
+      "input_type": "load_kw_type_select",
+      "charges": [
+        {
+          "key": "residential",
+          "label": "રહેણાંક (Residential)",
+          "amount_type": "per_kw",
+          "rate_per_kw": 100
+        },
+        {
+          "key": "non_residential_lt_15kw",
+          "label": "રહેણાંક સિવાય 15 kW સુધી (Non-Residential up to 15 kW)",
+          "amount_type": "per_kw",
+          "rate_per_kw": 1200
+        },
+        {
+          "key": "non_residential_gt_15kw",
+          "label": "રહેણાંક સિવાય 15 kW થી વધુ (Non-Residential above 15 kW)",
+          "amount_type": "per_kw",
+          "rate_per_kw": 1500
+        },
+        {
+          "key": "industrial",
+          "label": "ઔદ્યોગિક (Industrial)",
+          "amount_type": "per_kw",
+          "rate_per_kw": 3400
+        }
+      ]
+    }
+  ]
+}
