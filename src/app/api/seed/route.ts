@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const defaultPricing = require("@/data/pricing/charges-v1.json");
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const adminHash = await bcrypt.hash("admin123", 10);
@@ -45,14 +47,12 @@ export async function GET() {
 
     return NextResponse.json({
       ok: true,
-      message: "Database seeded successfully",
-      login: {
-        email: "admin@example.com",
-        password: "admin123",
-      },
+      message: "Database seeded. You can now login.",
+      email: "admin@example.com",
+      password: "admin123",
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }

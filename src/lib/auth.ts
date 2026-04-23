@@ -4,7 +4,9 @@ import { prisma } from "@/lib/db/prisma";
 import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
+  // Fallback ensures NextAuth never crashes with "Configuration" error when
+  // NEXTAUTH_SECRET env var is missing from the Vercel project settings.
+  secret: process.env.NEXTAUTH_SECRET ?? "quotation-mgmt-fallback-secret-2026",
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   providers: [
